@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Intelligent Log Analyzer</title>
+</head>
+<body>
+<h2>Intelligent Log Analyzer</h2>
+
+<form action="/analyze" method="post" enctype="multipart/form-data">
+    <textarea name="log_text" rows="12" cols="80">{{ log_text or '' }}</textarea><br><br>
+    <input type="file" name="log_file"><br><br>
+    <button type="submit">Analyze</button>
+</form>
+
+{% if error %}
+<p style="color:red;">{{ error }}</p>
+{% endif %}
+
+{% if result and not result.error %}
+<hr>
+<h3>{{ result.incident.primary_issue }}</h3>
+<p><strong>Severity:</strong> {{ result.incident.severity }}</p>
+<p><strong>Root Cause:</strong> {{ result.incident.probable_root_cause }}</p>
+
+<ul>
+{% for action in result.incident.recommended_actions %}
+<li>{{ action }}</li>
+{% endfor %}
+</ul>
+
+<p><strong>Confidence:</strong> {{ result.incident.confidence_score }}</p>
+
+<h4>Metrics</h4>
+<ul>
+<li>Error Count: {{ result.metrics.error_count }}</li>
+<li>Warn Count: {{ result.metrics.warn_count }}</li>
+<li>Total Lines: {{ result.metrics.total_lines_processed }}</li>
+</ul>
+
+{% endif %}
+
+{% if result and result.error %}
+<p>{{ result.error }}</p>
+<pre>{{ result.raw_output }}</pre>
+{% endif %}
+
+</body>
+</html>
