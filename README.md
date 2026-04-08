@@ -25,20 +25,6 @@ The goal is to balance reliability with contextual intelligence.
 
 ![Architecture Diagram](assets/architecture.png)
 
-Pipeline:
-
-Raw Logs\
-↓\
-Deterministic Parsing\
-↓\
-Metrics Extraction\
-↓\
-LLM Reasoning\
-↓\
-Schema Validation\
-↓\
-Structured Incident Report
-
 ------------------------------------------------------------------------
 
 ## LLM Guardrails
